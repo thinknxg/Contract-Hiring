@@ -1,0 +1,72 @@
+{
+  "doctype": "DocType",
+  "name": "Hire Return Item",
+  "module": "Contract Hiring",
+  "custom": 0,
+  "istable": 1,
+  "fields": [
+    {
+      "fieldname": "item",
+      "label": "Item",
+      "fieldtype": "Link",
+      "options": "Item",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "description",
+      "label": "Description",
+      "fieldtype": "Small Text"
+    },
+    {
+      "fieldname": "delivered_qty",
+      "label": "Delivered Qty",
+      "fieldtype": "Float",
+      "read_only": 1
+    },
+    {
+      "fieldname": "previously_returned",
+      "label": "Previously Returned",
+      "fieldtype": "Float",
+      "read_only": 1
+    },
+    {
+      "fieldname": "qty_to_return",
+      "label": "Qty To Return",
+      "fieldtype": "Float",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "normal_return_qty",
+      "label": "Good / Normal Return",
+      "fieldtype": "Float"
+    },
+    {
+      "fieldname": "damage_qty",
+      "label": "Damage Qty",
+      "fieldtype": "Float"
+    },
+    {
+      "fieldname": "scrap_qty",
+      "label": "Scrap Qty",
+      "fieldtype": "Float"
+    },
+    {
+      "fieldname": "lost_qty",
+      "label": "Lost Qty",
+      "fieldtype": "Float"
+    },
+    {
+      "fieldname": "excess_qty",
+      "label": "Excess Qty",
+      "fieldtype": "Float"
+    },
+    {
+      "fieldname": "uom",
+      "label": "UOM",
+      "fieldtype": "Link",
+      "options": "UOM"
+    }
+  ]
+}

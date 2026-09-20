@@ -1,0 +1,147 @@
+{
+  "doctype": "DocType",
+  "name": "Contract Hiring Settings",
+  "module": "Contract Hiring",
+  "custom": 0,
+  "issingle": 1,
+  "fields": [
+    {
+      "fieldname": "stock_section",
+      "label": "Stock Defaults",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "main_stock_warehouse",
+      "label": "Main Stock Warehouse",
+      "fieldtype": "Link",
+      "options": "Warehouse"
+    },
+    {
+      "fieldname": "damage_warehouse",
+      "label": "Damage Warehouse",
+      "fieldtype": "Link",
+      "options": "Warehouse"
+    },
+    {
+      "fieldname": "scrap_warehouse",
+      "label": "Scrap Warehouse",
+      "fieldtype": "Link",
+      "options": "Warehouse"
+    },
+    {
+      "fieldname": "lost_warehouse",
+      "label": "Lost Warehouse",
+      "fieldtype": "Link",
+      "options": "Warehouse"
+    },
+    {
+      "fieldname": "billing_section",
+      "label": "Billing Defaults",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "default_billing_item",
+      "label": "Default Billing Item",
+      "fieldtype": "Link",
+      "options": "Item"
+    },
+    {
+      "fieldname": "income_account",
+      "label": "Income Account",
+      "fieldtype": "Link",
+      "options": "Account"
+    },
+    {
+      "fieldname": "tax_template",
+      "label": "Sales Taxes and Charges Template",
+      "fieldtype": "Link",
+      "options": "Sales Taxes and Charges Template"
+    },
+    {
+      "fieldname": "company",
+      "label": "Company",
+      "fieldtype": "Link",
+      "options": "Company"
+    },
+    {
+      "fieldname": "automation_section",
+      "label": "Automation",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "auto_create_site_warehouse",
+      "label": "Auto Create Site Warehouse",
+      "fieldtype": "Check",
+      "default": "1"
+    },
+    {
+      "fieldname": "allow_damage_stock_transfer",
+      "label": "Transfer Damage to Damage Warehouse",
+      "fieldtype": "Check",
+      "default": "1"
+    },
+    {
+      "fieldname": "allow_scrap_stock_transfer",
+      "label": "Transfer Scrap to Scrap Warehouse",
+      "fieldtype": "Check",
+      "default": "1"
+    },
+    {
+      "fieldname": "allow_lost_stock_transfer",
+      "label": "Transfer Lost to Lost Warehouse",
+      "fieldtype": "Check",
+      "default": "1"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "submit": 1,
+      "cancel": 1,
+      "delete": 1,
+      "print": 1,
+      "email": 1,
+      "export": 1,
+      "share": 1
+    },
+    {
+      "role": "Contract Hiring Manager",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "submit": 1,
+      "cancel": 1,
+      "print": 1,
+      "email": 1,
+      "export": 1
+    },
+    {
+      "role": "Sales User",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "print": 1,
+      "email": 1
+    },
+    {
+      "role": "Stock User",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "submit": 1,
+      "print": 1
+    },
+    {
+      "role": "Accounts User",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "submit": 1,
+      "print": 1,
+      "email": 1
+    }
+  ]
+}

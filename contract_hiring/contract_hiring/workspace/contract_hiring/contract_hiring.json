@@ -1,0 +1,10 @@
+{
+  "doctype": "Workspace",
+  "name": "Contract Hiring",
+  "module": "Contract Hiring",
+  "label": "Contract Hiring",
+  "public": 1,
+  "icon": "tool",
+  "is_hidden": 0,
+  "content": "[{\"type\": \"header\", \"data\": {\"text\": \"Contract Hiring\", \"col\": 12}}, {\"type\": \"paragraph\", \"data\": {\"text\": \"Customer \\u2192 Project \\u2192 Site \\u2192 Quotation \\u2192 Hire Order \\u2192 Delivery \\u2192 Site Stock \\u2192 Return \\u2192 Billing \\u2192 Sales Invoice\", \"col\": 12}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Contract Hiring Quotation\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Order\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Delivery\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Return\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Billing\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Project Site\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Job Type\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Contract Hiring Settings\", \"col\": 3}}, {\"type\": \"header\", \"data\": {\"text\": \"Reports\", \"col\": 12}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Order Status\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Delivery Register\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Return Register\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Site Stock Summary\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Pending Hire Billing\", \"col\": 3}}]"
+}

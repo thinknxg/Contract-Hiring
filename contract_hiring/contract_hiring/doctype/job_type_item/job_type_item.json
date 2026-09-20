@@ -1,0 +1,54 @@
+{
+  "doctype": "DocType",
+  "name": "Job Type Item",
+  "module": "Contract Hiring",
+  "custom": 0,
+  "istable": 1,
+  "fields": [
+    {
+      "fieldname": "item",
+      "label": "Item",
+      "fieldtype": "Link",
+      "options": "Item",
+      "reqd": 1
+    },
+    {
+      "fieldname": "description",
+      "label": "Description",
+      "fieldtype": "Small Text"
+    },
+    {
+      "fieldname": "default_qty",
+      "label": "Default Qty",
+      "fieldtype": "Float"
+    },
+    {
+      "fieldname": "uom",
+      "label": "UOM",
+      "fieldtype": "Link",
+      "options": "UOM"
+    },
+    {
+      "fieldname": "rate_type",
+      "label": "Rate Type",
+      "fieldtype": "Select",
+      "options": "M3\nSQM\nNos\nDay\nMonth\nLumpsum"
+    },
+    {
+      "fieldname": "rate",
+      "label": "Rate",
+      "fieldtype": "Currency"
+    },
+    {
+      "fieldname": "duration",
+      "label": "Duration",
+      "fieldtype": "Float"
+    },
+    {
+      "fieldname": "period",
+      "label": "Period",
+      "fieldtype": "Select",
+      "options": "Day\nMonth\nYear"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "doctype": "Report",
+  "name": "Hire Delivery Register",
+  "ref_doctype": "Hire Delivery",
+  "report_name": "Hire Delivery Register",
+  "report_type": "Script Report",
+  "is_standard": "Yes",
+  "module": "Contract Hiring"
+}

@@ -1,0 +1,127 @@
+{
+  "doctype": "DocType",
+  "name": "Hire Billing",
+  "module": "Contract Hiring",
+  "custom": 0,
+  "autoname": "HB-.#####",
+  "is_submittable": 1,
+  "fields": [
+    {
+      "fieldname": "billing_date",
+      "label": "Billing Date",
+      "fieldtype": "Date",
+      "default": "Today",
+      "reqd": 1
+    },
+    {
+      "fieldname": "customer",
+      "label": "Customer",
+      "fieldtype": "Link",
+      "options": "Customer",
+      "reqd": 1
+    },
+    {
+      "fieldname": "project",
+      "label": "Project",
+      "fieldtype": "Link",
+      "options": "Project",
+      "reqd": 1
+    },
+    {
+      "fieldname": "site",
+      "label": "Project Site",
+      "fieldtype": "Link",
+      "options": "Project Site"
+    },
+    {
+      "fieldname": "hire_order",
+      "label": "Hire Order",
+      "fieldtype": "Link",
+      "options": "Hire Order",
+      "reqd": 1
+    },
+    {
+      "fieldname": "from_date",
+      "label": "From Date",
+      "fieldtype": "Date",
+      "reqd": 1
+    },
+    {
+      "fieldname": "to_date",
+      "label": "To Date",
+      "fieldtype": "Date",
+      "reqd": 1
+    },
+    {
+      "fieldname": "items",
+      "label": "Billing Items",
+      "fieldtype": "Table",
+      "options": "Hire Billing Item",
+      "reqd": 1
+    },
+    {
+      "fieldname": "grand_total",
+      "label": "Grand Total",
+      "fieldtype": "Currency",
+      "read_only": 1
+    },
+    {
+      "fieldname": "sales_invoice",
+      "label": "Sales Invoice",
+      "fieldtype": "Link",
+      "options": "Sales Invoice",
+      "read_only": 1
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "submit": 1,
+      "cancel": 1,
+      "delete": 1,
+      "print": 1,
+      "email": 1,
+      "export": 1,
+      "share": 1
+    },
+    {
+      "role": "Contract Hiring Manager",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "submit": 1,
+      "cancel": 1,
+      "print": 1,
+      "email": 1,
+      "export": 1
+    },
+    {
+      "role": "Sales User",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "print": 1,
+      "email": 1
+    },
+    {
+      "role": "Stock User",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "submit": 1,
+      "print": 1
+    },
+    {
+      "role": "Accounts User",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "submit": 1,
+      "print": 1,
+      "email": 1
+    }
+  ]
+}

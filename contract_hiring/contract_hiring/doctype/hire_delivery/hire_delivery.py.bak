@@ -1,0 +1,43 @@
+import frappe
+from frappe.model.document import Document
+from frappe.utils import flt
+
+class HireDelivery(Document):
+    def validate(self):
+        ho=frappe.get_doc("Hire Order",self.hire_order)
+        self.customer,self.project,self.site=ho.customer,ho.project,ho.site
+        if not self.target_warehouse:
+            self.target_warehouse=frappe.db.get_value("Project Site",self.site,"warehouse")
+        if not self.source_warehouse:
+            self.source_warehouse=frappe.get_single("Contract Hiring Settings").main_stock_warehouse
+
+    def on_submit(self):
+        self.stock_entry=create_stock_entry(self)
+        self.db_set("stock_entry",self.stock_entry)
+
+@frappe.whitelist()
+def make_delivery(hire_order):
+    ho=frappe.get_doc("Hire Order",hire_order)
+    if ho.docstatus!=1: frappe.throw("Submit the Hire Order first.")
+    d=frappe.new_doc("Hire Delivery")
+    d.hire_order=ho.name; d.customer=ho.customer; d.project=ho.project; d.site=ho.site
+    d.target_warehouse=frappe.db.get_value("Project Site",ho.site,"warehouse")
+    d.source_warehouse=frappe.get_single("Contract Hiring Settings").main_stock_warehouse
+    for r in frappe.get_attr("contract_hiring.contract_hiring.doctype.hire_order.hire_order.get_deliverable_items")(ho.name):
+        if r["balance_qty"]>0:
+            d.append("items",{"item":r["item"],"description":r["description"],"qty":r["balance_qty"],"uom":r["uom"]})
+    d.insert()
+    return d.name
+
+def create_stock_entry(doc):
+    if not doc.source_warehouse or not doc.target_warehouse:
+        frappe.throw("Set both Source Warehouse and Site Warehouse.")
+    se=frappe.new_doc("Stock Entry")
+    se.stock_entry_type="Material Transfer"
+    se.company=frappe.db.get_value("Project",doc.project,"company") or frappe.defaults.get_global_default("company")
+    se.posting_date=doc.delivery_date
+    for r in doc.items:
+        se.append("items",{"item_code":r.item,"qty":flt(r.qty),"uom":r.uom or frappe.db.get_value("Item",r.item,"stock_uom"),
+                           "s_warehouse":doc.source_warehouse,"t_warehouse":doc.target_warehouse,"description":r.description})
+    se.insert(ignore_permissions=True); se.submit()
+    return se.name

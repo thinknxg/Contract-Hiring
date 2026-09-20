@@ -1,0 +1,9 @@
+{
+  "doctype": "Report",
+  "name": "Pending Hire Billing",
+  "ref_doctype": "Hire Order",
+  "report_name": "Pending Hire Billing",
+  "report_type": "Script Report",
+  "is_standard": "Yes",
+  "module": "Contract Hiring"
+}

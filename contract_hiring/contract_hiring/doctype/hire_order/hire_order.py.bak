@@ -1,0 +1,58 @@
+import frappe
+from frappe.model.document import Document
+from frappe.utils import flt
+
+def delivered_for(ho, item):
+    rows = frappe.get_all("Hire Delivery Item", filters={"item":item}, fields=["qty","parent"])
+    parents = {x.parent for x in rows if frappe.db.get_value("Hire Delivery",x.parent,"hire_order")==ho}
+    return sum(flt(x.qty) for x in rows if x.parent in parents and frappe.db.get_value("Hire Delivery",x.parent,"docstatus")==1)
+
+def returned_for(ho, item):
+    rows = frappe.get_all("Hire Return Item", filters={"item":item}, fields=["qty_to_return","parent"])
+    parents = {x.parent for x in rows if frappe.db.get_value("Hire Return",x.parent,"hire_order")==ho}
+    return sum(flt(x.qty_to_return) for x in rows if x.parent in parents and frappe.db.get_value("Hire Return",x.parent,"docstatus")==1)
+
+class HireOrder(Document):
+    def validate(self):
+        total_qty=total=0
+        for r in self.items:
+            r.calculated_volume=flt(r.length)*flt(r.breadth)*flt(r.height)*(flt(r.locations) or 1)
+            if r.rate_type=="M3": base=r.calculated_volume
+            elif r.rate_type=="SQM": base=flt(r.length)*flt(r.breadth)*(flt(r.locations) or 1)
+            elif r.rate_type=="Lumpsum": base=1
+            else: base=flt(r.qty)
+            r.amount=base*flt(r.rate)*(flt(r.duration) or 1)
+            r.ordered_qty=flt(r.qty)
+            r.delivered_qty=delivered_for(self.name,r.item) if self.name else 0
+            r.returned_qty=returned_for(self.name,r.item) if self.name else 0
+            r.balance_qty=max(flt(r.delivered_qty)-flt(r.returned_qty),0)
+            total_qty += flt(r.qty); total += flt(r.amount)
+        self.total_ordered_qty=total_qty; self.total_ordered_amount=total
+        if self.docstatus==0: self.status="Draft"
+
+    def on_submit(self):
+        self.status="Submitted"
+
+    def on_cancel(self):
+        self.status="Cancelled"
+
+@frappe.whitelist()
+def get_deliverable_items(hire_order):
+    ho=frappe.get_doc("Hire Order",hire_order)
+    out=[]
+    for r in ho.items:
+        delivered=delivered_for(ho.name,r.item)
+        out.append({"item":r.item,"description":r.description,"ordered_qty":flt(r.qty),"delivered_qty":delivered,
+                    "balance_qty":max(flt(r.qty)-delivered,0),"uom":r.uom})
+    return out
+
+@frappe.whitelist()
+def get_returnable_items(hire_order):
+    ho=frappe.get_doc("Hire Order",hire_order)
+    out=[]
+    for r in ho.items:
+        delivered=delivered_for(ho.name,r.item)
+        returned=returned_for(ho.name,r.item)
+        out.append({"item":r.item,"description":r.description,"delivered_qty":delivered,
+                    "returned_qty":returned,"balance_qty":max(delivered-returned,0),"uom":r.uom})
+    return out

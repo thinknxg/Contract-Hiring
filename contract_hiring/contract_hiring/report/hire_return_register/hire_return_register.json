@@ -1,0 +1,9 @@
+{
+  "doctype": "Report",
+  "name": "Hire Return Register",
+  "ref_doctype": "Hire Return",
+  "report_name": "Hire Return Register",
+  "report_type": "Script Report",
+  "is_standard": "Yes",
+  "module": "Contract Hiring"
+}

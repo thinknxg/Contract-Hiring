@@ -1,0 +1,167 @@
+{
+ "autoname": "HO-.#####",
+ "custom": 0,
+ "doctype": "DocType",
+ "fields": [
+  {
+   "default": "Today",
+   "fieldname": "order_date",
+   "fieldtype": "Date",
+   "label": "Order Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project",
+   "reqd": 1
+  },
+  {
+   "fieldname": "site",
+   "fieldtype": "Link",
+   "label": "Project Site",
+   "options": "Project Site",
+   "reqd": 1
+  },
+  {
+   "fieldname": "quotation",
+   "fieldtype": "Link",
+   "label": "Contract Hiring Quotation",
+   "options": "Contract Hiring Quotation",
+   "reqd": 1
+  },
+  {
+   "fieldname": "job_type",
+   "fieldtype": "Link",
+   "label": "Job Type",
+   "options": "Job Type"
+  },
+  {
+   "fieldname": "enquiry_no",
+   "fieldtype": "Data",
+   "label": "Enquiry No"
+  },
+  {
+   "fieldname": "reference_no",
+   "fieldtype": "Data",
+   "label": "Reference No"
+  },
+  {
+   "fieldname": "sales_person",
+   "fieldtype": "Link",
+   "label": "Sales Person",
+   "options": "Sales Person"
+  },
+  {
+   "fieldname": "lpo_no",
+   "fieldtype": "Data",
+   "label": "Customer LPO No"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Hire Order Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "total_ordered_qty",
+   "fieldtype": "Float",
+   "label": "Total Ordered Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_ordered_amount",
+   "fieldtype": "Currency",
+   "label": "Total Order Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "billing_start_date",
+   "fieldtype": "Date",
+   "label": "Billing Start Date"
+  },
+  {
+   "fieldname": "billing_end_date",
+   "fieldtype": "Date",
+   "label": "Billing End Date"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nConfirmed\nPartially Delivered\nDelivered\nPartially Returned\nClosed\nCancelled",
+   "read_only": 1
+  },
+  {
+   "fieldname": "payment_terms",
+   "fieldtype": "Text Editor",
+   "label": "Payment Terms",
+   "reqd": 0
+  }
+ ],
+ "is_submittable": 1,
+ "modified": "2026-09-20 22:07:07.577622",
+ "module": "Contract Hiring",
+ "name": "Hire Order",
+ "permissions": [
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Contract Hiring Manager",
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Sales User",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Stock User",
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Accounts User",
+   "submit": 1,
+   "write": 1
+  }
+ ]
+}
