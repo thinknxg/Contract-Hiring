@@ -57,3 +57,7 @@ elif _fh not in _am:
 doc_events.setdefault("Sales Order", {})
 doc_events["Sales Order"]["on_submit"] = "contract_hiring.hiring.on_sales_order_submit"
 doc_events["Sales Order"]["on_cancel"] = "contract_hiring.hiring.on_sales_order_cancel"
+
+# ---- contract_hiring: back-navigation and Direct Invoice button ----
+for _dt in ("Hire Delivery", "Service Delivery", "Hire Return", "Hire Billing"):
+    doctype_js[_dt] = "public/js/hire_forms.js"
