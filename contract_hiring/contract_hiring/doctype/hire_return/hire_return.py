@@ -14,6 +14,8 @@ class HireReturn(Document):
         ho = frappe.get_doc("Hire Order", self.hire_order)
         if ho.docstatus != 1:
             frappe.throw(f"Hire Order {ho.name} must be submitted before creating a return.")
+        if ho.hiring_type == "Material Sale":
+            frappe.throw("A Material Sale order has no returns.")
         self.customer, self.project, self.site = ho.customer, ho.project, ho.site
         if not self.source_warehouse:
             self.source_warehouse = frappe.db.get_value("Project Site", self.site, "warehouse")
@@ -46,6 +48,13 @@ class HireReturn(Document):
         refresh_counters(self.hire_order)
 
     def on_cancel(self):
+        di = self.get("direct_invoice")
+        if di:
+            status = frappe.db.get_value("Sales Invoice", di, "docstatus")
+            if status == 1:
+                frappe.throw(f"Cancel the direct invoice {di} before cancelling this return.")
+            if status == 0:
+                frappe.delete_doc("Sales Invoice", di, force=1, ignore_permissions=True)
         if self.stock_entry:
             se = frappe.get_doc("Stock Entry", self.stock_entry)
             if se.docstatus == 1:
@@ -71,6 +80,39 @@ def make_return(hire_order):
                            "normal_return_qty": x["balance_qty"], "uom": x["uom"]})
     r.insert()
     return r.name
+
+@frappe.whitelist()
+def make_direct_invoice(hire_return):
+    hr = frappe.get_doc("Hire Return", hire_return)
+    if hr.docstatus != 1:
+        frappe.throw("Submit the Hire Return first.")
+    current = hr.get("direct_invoice")
+    if current and frappe.db.get_value("Sales Invoice", current, "docstatus") in (0, 1):
+        frappe.throw(f"Direct invoice {current} already exists for this return.")
+    settings = frappe.get_single("Contract Hiring Settings")
+    si = frappe.new_doc("Sales Invoice")
+    si.customer = hr.customer
+    si.company = frappe.db.get_value("Project", hr.project, "company") or settings.company or frappe.defaults.get_global_default("company")
+    si.project = hr.project
+    for r in hr.items:
+        rate = flt(frappe.db.get_value("Item", r.item, "standard_rate")) or flt(frappe.db.get_value("Item", r.item, "valuation_rate"))
+        uom = r.uom or frappe.db.get_value("Item", r.item, "stock_uom")
+        for label, qty in (("Damage", r.damage_qty), ("Scrap", r.scrap_qty), ("Lost", r.lost_qty)):
+            if flt(qty) > 0:
+                si.append("items", {"item_code": r.item, "qty": flt(qty), "uom": uom, "rate": rate,
+                                    "description": f"{label}: {r.description or r.item} (Return {hr.name})"})
+    if not si.items:
+        frappe.throw("This return has no damage, scrap or lost quantity to invoice.")
+    if settings.income_account:
+        for row in si.items:
+            row.income_account = settings.income_account
+    if settings.tax_template:
+        from erpnext.controllers.accounts_controller import get_taxes_and_charges
+        si.taxes_and_charges = settings.tax_template
+        si.extend("taxes", get_taxes_and_charges("Sales Taxes and Charges Template", settings.tax_template))
+    si.insert(ignore_permissions=True)
+    hr.db_set("direct_invoice", si.name)
+    return si.name
 
 def create_return_stock_entry(doc):
     settings = frappe.get_single("Contract Hiring Settings")

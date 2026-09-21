@@ -67,6 +67,10 @@ def update_status(ho_name):
 
 class HireOrder(Document):
     def validate(self):
+        if not self.quotation:
+            frappe.throw("A Hire Order is created from a submitted quotation. Use Create Hire Order on the quotation.")
+        if frappe.db.get_value("Contract Hiring Quotation", self.quotation, "docstatus") != 1:
+            frappe.throw(f"Quotation {self.quotation} must be submitted first.")
         seen = set()
         for r in self.items:
             if r.item in seen:

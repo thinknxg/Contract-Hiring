@@ -16,6 +16,12 @@ def calc_row(r):
         base = flt(r.qty)
     r.amount = base * flt(r.rate) * (flt(r.duration) or 1)
 
+RATE_TYPES_BY_TYPE = {
+    "Material Sale": ("Nos",),
+    "Material Hire": ("Day", "Month"),
+    "Contract Hire": ("M3", "SQM", "Nos", "Day", "Month", "Lumpsum"),
+}
+
 class ContractHiringQuotation(Document):
     def validate(self):
         seen = set()
@@ -23,6 +29,11 @@ class ContractHiringQuotation(Document):
             if r.item in seen:
                 frappe.throw(f"Row {r.idx}: {r.item} is already on this quotation. Combine it into one row.")
             seen.add(r.item)
+        htype = self.hiring_type or "Contract Hire"
+        allowed = RATE_TYPES_BY_TYPE[htype]
+        for r in self.items:
+            if r.rate_type not in allowed:
+                frappe.throw(f"Row {r.idx}: Rate Type {r.rate_type or '(blank)'} is not allowed on a {htype} quotation. Allowed: {', '.join(allowed)}.")
         total_qty = total_volume = total = 0
         for r in self.items:
             calc_row(r)
@@ -67,7 +78,7 @@ def create_hire_order(quotation):
     if existing:
         return existing
     ho = frappe.new_doc("Hire Order")
-    for f in ["customer","project","site","job_type","sales_person","enquiry_no","reference_no","payment_terms"]:
+    for f in ["customer","project","site","job_type","sales_person","enquiry_no","reference_no","payment_terms","hiring_type"]:
         setattr(ho, f, getattr(q, f, None))
     ho.quotation = q.name
     for r in q.items:

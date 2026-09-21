@@ -1,135 +1,151 @@
 {
-  "doctype": "DocType",
-  "name": "Hire Order Item",
-  "module": "Contract Hiring",
-  "custom": 0,
-  "istable": 1,
-  "fields": [
-    {
-      "fieldname": "item",
-      "label": "Item",
-      "fieldtype": "Link",
-      "options": "Item",
-      "reqd": 1,
-      "in_list_view": 1
-    },
-    {
-      "fieldname": "description",
-      "label": "Description",
-      "fieldtype": "Small Text"
-    },
-    {
-      "fieldname": "qty",
-      "label": "Qty",
-      "fieldtype": "Float",
-      "reqd": 1,
-      "in_list_view": 1
-    },
-    {
-      "fieldname": "uom",
-      "label": "UOM",
-      "fieldtype": "Link",
-      "options": "UOM"
-    },
-    {
-      "fieldname": "length",
-      "label": "Length",
-      "fieldtype": "Float"
-    },
-    {
-      "fieldname": "breadth",
-      "label": "Breadth",
-      "fieldtype": "Float"
-    },
-    {
-      "fieldname": "height",
-      "label": "Height",
-      "fieldtype": "Float"
-    },
-    {
-      "fieldname": "locations",
-      "label": "No. of Locations",
-      "fieldtype": "Float",
-      "default": "1"
-    },
-    {
-      "fieldname": "calculated_volume",
-      "label": "Calculated Volume (M3)",
-      "fieldtype": "Float",
-      "read_only": 1
-    },
-    {
-      "fieldname": "rate_type",
-      "label": "Rate Type",
-      "fieldtype": "Select",
-      "options": "M3\nSQM\nNos\nDay\nMonth\nLumpsum",
-      "reqd": 1
-    },
-    {
-      "fieldname": "rate",
-      "label": "Rate",
-      "fieldtype": "Currency",
-      "reqd": 1
-    },
-    {
-      "fieldname": "duration",
-      "label": "Duration",
-      "fieldtype": "Float",
-      "default": "1"
-    },
-    {
-      "fieldname": "period",
-      "label": "Period",
-      "fieldtype": "Select",
-      "options": "Day\nMonth\nYear"
-    },
-    {
-      "fieldname": "amount",
-      "label": "Amount",
-      "fieldtype": "Currency",
-      "read_only": 1
-    },
-    {
-      "fieldname": "ordered_qty",
-      "label": "Ordered Qty",
-      "fieldtype": "Float",
-      "read_only": 1
-    },
-    {
-      "fieldname": "delivered_qty",
-      "label": "Delivered Qty",
-      "fieldtype": "Float",
-      "read_only": 1
-    },
-    {
-      "fieldname": "returned_qty",
-      "label": "Returned Qty",
-      "fieldtype": "Float",
-      "read_only": 1
-    },
-    {
-      "fieldname": "damage_qty",
-      "label": "Damage Qty",
-      "fieldtype": "Float",
-      "read_only": 1
-    },
-    {
-      "fieldname": "scrap_qty",
-      "label": "Scrap Qty",
-      "fieldtype": "Float",
-      "read_only": 1
-    },
-    {
-      "fieldname": "lost_qty",
-      "label": "Lost Qty",
-      "fieldtype": "Float",
-      "read_only": 1
-    },
-    {
-      "fieldname": "balance_qty",
-      "label": "Balance Qty",
-      "fieldtype": "Float",
-      "read_only": 1
-    }
-  ]
+ "custom": 0,
+ "doctype": "DocType",
+ "fields": [
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Qty",
+   "reqd": 1
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "length",
+   "fieldtype": "Float",
+   "label": "Length"
+  },
+  {
+   "fieldname": "breadth",
+   "fieldtype": "Float",
+   "label": "Breadth"
+  },
+  {
+   "fieldname": "height",
+   "fieldtype": "Float",
+   "label": "Height"
+  },
+  {
+   "default": "1",
+   "fieldname": "locations",
+   "fieldtype": "Float",
+   "label": "No. of Locations"
+  },
+  {
+   "fieldname": "calculated_volume",
+   "fieldtype": "Float",
+   "label": "Calculated Volume (M3)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "rate_type",
+   "fieldtype": "Select",
+   "label": "Rate Type",
+   "options": "M3\nSQM\nNos\nDay\nMonth\nLumpsum",
+   "reqd": 1
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Rate",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "duration",
+   "fieldtype": "Float",
+   "label": "Duration"
+  },
+  {
+   "fieldname": "period",
+   "fieldtype": "Select",
+   "label": "Period",
+   "options": "Day\nMonth\nYear"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ordered_qty",
+   "fieldtype": "Float",
+   "label": "Ordered Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "delivered_qty",
+   "fieldtype": "Float",
+   "label": "Delivered Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "returned_qty",
+   "fieldtype": "Float",
+   "label": "Returned Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "damage_qty",
+   "fieldtype": "Float",
+   "label": "Damage Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "scrap_qty",
+   "fieldtype": "Float",
+   "label": "Scrap Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "lost_qty",
+   "fieldtype": "Float",
+   "label": "Lost Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "balance_qty",
+   "fieldtype": "Float",
+   "label": "Balance Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "serviced_on",
+   "fieldtype": "Date",
+   "label": "Serviced On",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "service_delivery",
+   "fieldtype": "Link",
+   "label": "Service Delivery",
+   "no_copy": 1,
+   "options": "Service Delivery",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2026-09-21 08:06:16.272891",
+ "module": "Contract Hiring",
+ "name": "Hire Order Item"
 }

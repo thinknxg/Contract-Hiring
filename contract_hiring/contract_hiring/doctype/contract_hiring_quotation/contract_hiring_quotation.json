@@ -125,10 +125,25 @@
    "fieldname": "revision_date",
    "fieldtype": "Date",
    "label": "Revision Date"
+  },
+  {
+   "default": "Contract Hire",
+   "fieldname": "hiring_type",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Type of Quotation",
+   "options": "Material Sale\nMaterial Hire\nContract Hire",
+   "reqd": 1
+  },
+  {
+   "fieldname": "lead",
+   "fieldtype": "Link",
+   "label": "Lead",
+   "options": "Lead"
   }
  ],
  "is_submittable": 1,
- "modified": "2026-09-20 22:01:38.799618",
+ "modified": "2026-09-20 22:33:48.552739",
  "module": "Contract Hiring",
  "name": "Contract Hiring Quotation",
  "permissions": [

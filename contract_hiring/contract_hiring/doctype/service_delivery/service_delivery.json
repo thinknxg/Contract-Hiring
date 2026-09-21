@@ -1,94 +1,19 @@
 {
- "autoname": "HR-.#####",
+ "autoname": "SD-.#####",
  "custom": 0,
  "doctype": "DocType",
+ "field_order": [
+  "hiring_type",
+  "service_date",
+  "hire_order",
+  "customer",
+  "project",
+  "site",
+  "items",
+  "remarks",
+  "amended_from"
+ ],
  "fields": [
-  {
-   "default": "Today",
-   "fieldname": "return_date",
-   "fieldtype": "Date",
-   "label": "Return Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "label": "Customer",
-   "options": "Customer",
-   "read_only": 1
-  },
-  {
-   "fieldname": "project",
-   "fieldtype": "Link",
-   "label": "Project",
-   "options": "Project",
-   "read_only": 1
-  },
-  {
-   "fieldname": "site",
-   "fieldtype": "Link",
-   "label": "Project Site",
-   "options": "Project Site",
-   "read_only": 1
-  },
-  {
-   "fieldname": "hire_order",
-   "fieldtype": "Link",
-   "label": "Hire Order",
-   "options": "Hire Order",
-   "reqd": 1
-  },
-  {
-   "fieldname": "source_warehouse",
-   "fieldtype": "Link",
-   "label": "Site Warehouse",
-   "options": "Warehouse"
-  },
-  {
-   "fieldname": "target_warehouse",
-   "fieldtype": "Link",
-   "label": "Return Warehouse",
-   "options": "Warehouse"
-  },
-  {
-   "fieldname": "vehicle_no",
-   "fieldtype": "Data",
-   "label": "Vehicle No"
-  },
-  {
-   "fieldname": "challan_no",
-   "fieldtype": "Data",
-   "label": "Return Challan No"
-  },
-  {
-   "fieldname": "remarks",
-   "fieldtype": "Small Text",
-   "label": "Remarks"
-  },
-  {
-   "fieldname": "items",
-   "fieldtype": "Table",
-   "label": "Return Items",
-   "options": "Hire Return Item",
-   "reqd": 1
-  },
-  {
-   "fieldname": "stock_entry",
-   "fieldtype": "Link",
-   "label": "Stock Entry",
-   "options": "Stock Entry",
-   "read_only": 1
-  },
-  {
-   "fieldname": "rent_up_to",
-   "fieldtype": "Date",
-   "label": "Rent Up To"
-  },
-  {
-   "fieldname": "driver_name",
-   "fieldtype": "Data",
-   "label": "Driver"
-  },
   {
    "fetch_from": "hire_order.hiring_type",
    "fieldname": "hiring_type",
@@ -99,18 +24,75 @@
    "read_only": 1
   },
   {
-   "fieldname": "direct_invoice",
+   "default": "Today",
+   "fieldname": "service_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Service Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "hire_order",
    "fieldtype": "Link",
-   "label": "Direct Invoice",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Hire Order",
+   "options": "Hire Order",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "hire_order.customer",
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "hire_order.project",
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "hire_order.site",
+   "fieldname": "site",
+   "fieldtype": "Link",
+   "label": "Site",
+   "options": "Project Site",
+   "read_only": 1
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Contract Lines Delivered",
+   "options": "Service Delivery Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
    "no_copy": 1,
-   "options": "Sales Invoice",
+   "options": "Service Delivery",
+   "print_hide": 1,
    "read_only": 1
   }
  ],
  "is_submittable": 1,
+ "links": [],
  "modified": "2026-09-21 08:06:16.272891",
  "module": "Contract Hiring",
- "name": "Hire Return",
+ "name": "Service Delivery",
+ "naming_rule": "Expression (old style)",
  "permissions": [
   {
    "cancel": 1,
