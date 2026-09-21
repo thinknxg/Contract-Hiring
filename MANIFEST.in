@@ -1,1 +1,1 @@
-recursive-include contract_hiring *.json *.js *.py *.md
+recursive-include contract_hiring *.json *.js *.py *.md *.txt *.html *.css
