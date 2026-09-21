@@ -1,5 +1,18 @@
 frappe.ui.form.on("Hire Billing", {
     refresh(frm) {
+        if (frm.doc.docstatus === 0 && frm.doc.hire_order) {
+            frm.add_custom_button("Recalculate Items", () => {
+                frappe.call({method: "contract_hiring.contract_hiring.doctype.hire_billing.hire_billing.get_billing_items",
+                    args: {hire_order: frm.doc.hire_order, from_date: frm.doc.from_date, to_date: frm.doc.to_date}, freeze: true,
+                    callback: r => {
+                        frm.clear_table("items");
+                        (r.message.items || []).forEach(it => frm.add_child("items", it));
+                        frm.refresh_field("items");
+                        if ((r.message.notes || []).length) frappe.msgprint(r.message.notes.join("<br>"));
+                        frm.dirty();
+                    }});
+            });
+        }
         if (frm.doc.sales_invoice) frm.add_custom_button("Open Sales Invoice",()=>frappe.set_route("Form","Sales Invoice",frm.doc.sales_invoice),"Navigate");
         if (frm.doc.hire_order) frm.add_custom_button("Open Hire Order",()=>frappe.set_route("Form","Hire Order",frm.doc.hire_order),"Navigate");
     }

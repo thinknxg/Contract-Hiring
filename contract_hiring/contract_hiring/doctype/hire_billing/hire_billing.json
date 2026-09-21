@@ -77,10 +77,16 @@
    "label": "Type",
    "options": "Material Sale\nMaterial Hire\nContract Hire",
    "read_only": 1
+  },
+  {
+   "fieldname": "invoice_type",
+   "fieldtype": "Data",
+   "label": "Invoice Type",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
- "modified": "2026-09-20 22:33:48.552739",
+ "modified": "2026-09-21 08:12:58.229526",
  "module": "Contract Hiring",
  "name": "Hire Billing",
  "permissions": [

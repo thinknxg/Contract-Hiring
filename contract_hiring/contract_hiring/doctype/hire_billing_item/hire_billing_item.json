@@ -1,62 +1,89 @@
 {
-  "doctype": "DocType",
-  "name": "Hire Billing Item",
-  "module": "Contract Hiring",
-  "custom": 0,
-  "istable": 1,
-  "fields": [
-    {
-      "fieldname": "item",
-      "label": "Item",
-      "fieldtype": "Link",
-      "options": "Item"
-    },
-    {
-      "fieldname": "description",
-      "label": "Description",
-      "fieldtype": "Small Text"
-    },
-    {
-      "fieldname": "qty",
-      "label": "Qty",
-      "fieldtype": "Float",
-      "reqd": 1
-    },
-    {
-      "fieldname": "uom",
-      "label": "UOM",
-      "fieldtype": "Link",
-      "options": "UOM"
-    },
-    {
-      "fieldname": "rate_type",
-      "label": "Rate Type",
-      "fieldtype": "Select",
-      "options": "M3\nSQM\nNos\nDay\nMonth\nLumpsum"
-    },
-    {
-      "fieldname": "rate",
-      "label": "Rate",
-      "fieldtype": "Currency",
-      "reqd": 1
-    },
-    {
-      "fieldname": "duration",
-      "label": "Duration",
-      "fieldtype": "Float",
-      "default": "1"
-    },
-    {
-      "fieldname": "period",
-      "label": "Period",
-      "fieldtype": "Select",
-      "options": "Day\nMonth\nYear"
-    },
-    {
-      "fieldname": "amount",
-      "label": "Amount",
-      "fieldtype": "Currency",
-      "read_only": 1
-    }
-  ]
+ "custom": 0,
+ "doctype": "DocType",
+ "fields": [
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "label": "Item",
+   "options": "Item"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Float",
+   "label": "Qty",
+   "reqd": 1
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "rate_type",
+   "fieldtype": "Select",
+   "label": "Rate Type",
+   "options": "M3\nSQM\nNos\nDay\nMonth\nLumpsum"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Rate",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "duration",
+   "fieldtype": "Float",
+   "label": "Duration"
+  },
+  {
+   "fieldname": "period",
+   "fieldtype": "Select",
+   "label": "Period",
+   "options": "Day\nMonth\nYear"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "order_row",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Order Row",
+   "read_only": 1
+  },
+  {
+   "fieldname": "billing_mode",
+   "fieldtype": "Select",
+   "label": "Billing Mode",
+   "options": "Periodic\nOne-time\nQuantity",
+   "read_only": 1
+  },
+  {
+   "fieldname": "billed_from",
+   "fieldtype": "Date",
+   "label": "Billed From",
+   "read_only": 1
+  },
+  {
+   "fieldname": "billed_to",
+   "fieldtype": "Date",
+   "label": "Billed To",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2026-09-21 08:12:58.229526",
+ "module": "Contract Hiring",
+ "name": "Hire Billing Item"
 }
