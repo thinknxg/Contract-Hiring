@@ -1,10 +1,66 @@
 {
-  "doctype": "Workspace",
-  "name": "Contract Hiring",
-  "module": "Contract Hiring",
-  "label": "Contract Hiring",
-  "public": 1,
-  "icon": "tool",
-  "is_hidden": 0,
-  "content": "[{\"type\": \"header\", \"data\": {\"text\": \"Contract Hiring\", \"col\": 12}}, {\"type\": \"paragraph\", \"data\": {\"text\": \"Customer \\u2192 Project \\u2192 Site \\u2192 Quotation \\u2192 Hire Order \\u2192 Delivery \\u2192 Site Stock \\u2192 Return \\u2192 Billing \\u2192 Sales Invoice\", \"col\": 12}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Contract Hiring Quotation\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Order\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Delivery\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Return\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Billing\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Project Site\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Job Type\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Contract Hiring Settings\", \"col\": 3}}, {\"type\": \"header\", \"data\": {\"text\": \"Reports\", \"col\": 12}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Order Status\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Delivery Register\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Return Register\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Site Stock Summary\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Pending Hire Billing\", \"col\": 3}}]"
+ "content": "[{\"type\": \"header\", \"data\": {\"text\": \"Contract Hiring\", \"col\": 12}}, {\"type\": \"paragraph\", \"data\": {\"text\": \"Customer \\u2192 Project \\u2192 Site \\u2192 Quotation \\u2192 Sales Order \\u2192 Delivery \\u2192 Site Stock \\u2192 Return \\u2192 Billing \\u2192 Sales Invoice\", \"col\": 12}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Delivery\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Return\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Billing\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Project Site\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Job Type\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Contract Hiring Settings\", \"col\": 3}}, {\"type\": \"header\", \"data\": {\"text\": \"Reports\", \"col\": 12}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Delivery Register\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hire Return Register\", \"col\": 3}}, {\"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Site Stock Summary\", \"col\": 3}}]",
+ "doctype": "Workspace",
+ "icon": "tool",
+ "is_hidden": 0,
+ "label": "Contract Hiring",
+ "module": "Contract Hiring",
+ "name": "Contract Hiring",
+ "public": 1,
+ "shortcuts": [
+  {
+   "doc_view": "List",
+   "label": "Hire Delivery",
+   "link_to": "Hire Delivery",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Hire Return",
+   "link_to": "Hire Return",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Hire Billing",
+   "link_to": "Hire Billing",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Project Site",
+   "link_to": "Project Site",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Job Type",
+   "link_to": "Job Type",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Contract Hiring Settings",
+   "link_to": "Contract Hiring Settings",
+   "type": "DocType"
+  },
+  {
+   "is_query_report": 1,
+   "label": "Hire Delivery Register",
+   "link_to": "Hire Delivery Register",
+   "type": "Report"
+  },
+  {
+   "is_query_report": 1,
+   "label": "Hire Return Register",
+   "link_to": "Hire Return Register",
+   "type": "Report"
+  },
+  {
+   "is_query_report": 1,
+   "label": "Site Stock Summary",
+   "link_to": "Site Stock Summary",
+   "type": "Report"
+  }
+ ]
 }
