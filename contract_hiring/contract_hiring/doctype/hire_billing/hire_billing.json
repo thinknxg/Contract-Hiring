@@ -31,10 +31,10 @@
    "options": "Project Site"
   },
   {
-   "fieldname": "hire_order",
+   "fieldname": "sales_order",
    "fieldtype": "Link",
-   "label": "Hire Order",
-   "options": "Hire Order",
+   "label": "Sales Order",
+   "options": "Sales Order",
    "reqd": 1
   },
   {

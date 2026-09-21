@@ -9,6 +9,6 @@ frappe.ui.form.on("Hire Return", {
         }
         if (frm.doc.direct_invoice) frm.add_custom_button("Open Direct Invoice", () => frappe.set_route("Form", "Sales Invoice", frm.doc.direct_invoice), "Navigate");
         if (frm.doc.stock_entry) frm.add_custom_button("Open Stock Entry",()=>frappe.set_route("Form","Stock Entry",frm.doc.stock_entry),"Navigate");
-        if (frm.doc.hire_order) frm.add_custom_button("Open Hire Order",()=>frappe.set_route("Form","Hire Order",frm.doc.hire_order),"Navigate");
+        if (frm.doc.sales_order) frm.add_custom_button("Open Sales Order",()=>frappe.set_route("Form","Sales Order",frm.doc.sales_order),"Navigate");
     }
 });

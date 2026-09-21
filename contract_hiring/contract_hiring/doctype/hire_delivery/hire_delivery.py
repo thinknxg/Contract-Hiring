@@ -2,18 +2,15 @@ import frappe
 from frappe.model.document import Document
 from frappe.utils import flt
 
-from contract_hiring.contract_hiring.doctype.hire_order.hire_order import (
-    delivered_for,
-    get_deliverable_items,
-    refresh_counters,
-)
+from contract_hiring.hiring_flow import delivered_for, get_deliverable_items, refresh_counters
+
 
 class HireDelivery(Document):
     def validate(self):
-        ho = frappe.get_doc("Hire Order", self.hire_order)
-        if ho.docstatus != 1:
-            frappe.throw(f"Hire Order {ho.name} must be submitted before creating a delivery.")
-        self.customer, self.project, self.site = ho.customer, ho.project, ho.site
+        so = frappe.get_doc("Sales Order", self.sales_order)
+        if so.docstatus != 1:
+            frappe.throw(f"Sales Order {so.name} must be submitted before creating a delivery.")
+        self.customer, self.project, self.site = so.customer, so.project, so.hiring_site
         if not self.target_warehouse:
             self.target_warehouse = frappe.db.get_value("Project Site", self.site, "warehouse")
         if not self.source_warehouse:
@@ -26,16 +23,16 @@ class HireDelivery(Document):
             per_item[r.item] = per_item.get(r.item, 0) + flt(r.qty)
         for item, qty in per_item.items():
             ordered = flt(frappe.db.sql(
-                "select sum(qty) from `tabHire Order Item` where parent = %s and item = %s",
-                (self.hire_order, item))[0][0])
-            already = delivered_for(self.hire_order, item)
+                "select sum(qty) from `tabSales Order Item` where parent = %s and item_code = %s",
+                (self.sales_order, item))[0][0])
+            already = delivered_for(self.sales_order, item)
             if qty + already > ordered + 0.000001:
                 frappe.throw(f"{item}: delivering {qty} on top of {already} already delivered exceeds the ordered {ordered}.")
 
     def on_submit(self):
         self.stock_entry = create_stock_entry(self)
         self.db_set("stock_entry", self.stock_entry)
-        refresh_counters(self.hire_order)
+        refresh_counters(self.sales_order)
 
     def on_cancel(self):
         if self.stock_entry:
@@ -43,24 +40,29 @@ class HireDelivery(Document):
             if se.docstatus == 1:
                 se.flags.ignore_permissions = True
                 se.cancel()
-        refresh_counters(self.hire_order)
+        refresh_counters(self.sales_order)
+
 
 @frappe.whitelist()
-def make_delivery(hire_order):
-    ho = frappe.get_doc("Hire Order", hire_order)
-    if ho.docstatus != 1:
-        frappe.throw("Submit the Hire Order first.")
+def make_delivery(sales_order):
+    so = frappe.get_doc("Sales Order", sales_order)
+    if so.docstatus != 1:
+        frappe.throw("Submit the Sales Order first.")
     d = frappe.new_doc("Hire Delivery")
-    d.hire_order = ho.name; d.customer = ho.customer; d.project = ho.project; d.site = ho.site
-    d.target_warehouse = frappe.db.get_value("Project Site", ho.site, "warehouse")
+    d.sales_order = so.name
+    d.customer = so.customer
+    d.project = so.project
+    d.site = so.hiring_site
+    d.target_warehouse = frappe.db.get_value("Project Site", so.hiring_site, "warehouse")
     d.source_warehouse = frappe.get_single("Contract Hiring Settings").main_stock_warehouse
-    for r in get_deliverable_items(ho.name):
+    for r in get_deliverable_items(so.name):
         if r["balance_qty"] > 0:
             d.append("items", {"item": r["item"], "description": r["description"], "qty": r["balance_qty"], "uom": r["uom"]})
     if not d.items:
         frappe.throw("Nothing left to deliver against this order.")
     d.insert()
     return d.name
+
 
 def create_stock_entry(doc):
     if not doc.source_warehouse or not doc.target_warehouse:

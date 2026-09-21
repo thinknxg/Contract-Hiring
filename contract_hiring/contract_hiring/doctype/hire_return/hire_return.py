@@ -2,21 +2,17 @@ import frappe
 from frappe.model.document import Document
 from frappe.utils import flt
 
-from contract_hiring.contract_hiring.doctype.hire_order.hire_order import (
-    delivered_for,
-    get_returnable_items,
-    refresh_counters,
-    returned_for,
-)
+from contract_hiring.hiring_flow import delivered_for, get_returnable_items, refresh_counters, returned_for
+
 
 class HireReturn(Document):
     def validate(self):
-        ho = frappe.get_doc("Hire Order", self.hire_order)
-        if ho.docstatus != 1:
-            frappe.throw(f"Hire Order {ho.name} must be submitted before creating a return.")
-        if ho.hiring_type == "Material Sale":
+        so = frappe.get_doc("Sales Order", self.sales_order)
+        if so.docstatus != 1:
+            frappe.throw(f"Sales Order {so.name} must be submitted before creating a return.")
+        if so.hiring_type == "Material Sale":
             frappe.throw("A Material Sale order has no returns.")
-        self.customer, self.project, self.site = ho.customer, ho.project, ho.site
+        self.customer, self.project, self.site = so.customer, so.project, so.hiring_site
         if not self.source_warehouse:
             self.source_warehouse = frappe.db.get_value("Project Site", self.site, "warehouse")
         if not self.target_warehouse:
@@ -38,14 +34,14 @@ class HireReturn(Document):
                 frappe.throw(f"Row {r.idx}: Excess ({r.excess_qty}) cannot be more than the normal return quantity.")
             per_item[r.item] = per_item.get(r.item, 0) + flt(r.qty_to_return)
         for item, qty in per_item.items():
-            on_hire = delivered_for(self.hire_order, item) - returned_for(self.hire_order, item)
+            on_hire = delivered_for(self.sales_order, item) - returned_for(self.sales_order, item)
             if qty > on_hire + 0.000001:
                 frappe.throw(f"{item}: returning {qty} but only {on_hire} is on hire.")
 
     def on_submit(self):
         self.stock_entry = create_return_stock_entry(self)
         self.db_set("stock_entry", self.stock_entry)
-        refresh_counters(self.hire_order)
+        refresh_counters(self.sales_order)
 
     def on_cancel(self):
         di = self.get("direct_invoice")
@@ -60,19 +56,20 @@ class HireReturn(Document):
             if se.docstatus == 1:
                 se.flags.ignore_permissions = True
                 se.cancel()
-        refresh_counters(self.hire_order)
+        refresh_counters(self.sales_order)
+
 
 @frappe.whitelist()
-def make_return(hire_order):
-    ho = frappe.get_doc("Hire Order", hire_order)
-    if ho.docstatus != 1:
-        frappe.throw("Submit the Hire Order first.")
-    rows = [x for x in get_returnable_items(ho.name) if x["balance_qty"] > 0]
+def make_return(sales_order):
+    so = frappe.get_doc("Sales Order", sales_order)
+    if so.docstatus != 1:
+        frappe.throw("Submit the Sales Order first.")
+    rows = [x for x in get_returnable_items(so.name) if x["balance_qty"] > 0]
     if not rows:
         frappe.throw("Nothing left to return against this order.")
     r = frappe.new_doc("Hire Return")
-    r.hire_order = ho.name; r.customer = ho.customer; r.project = ho.project; r.site = ho.site
-    r.source_warehouse = frappe.db.get_value("Project Site", ho.site, "warehouse")
+    r.sales_order = so.name; r.customer = so.customer; r.project = so.project; r.site = so.hiring_site
+    r.source_warehouse = frappe.db.get_value("Project Site", so.hiring_site, "warehouse")
     r.target_warehouse = frappe.get_single("Contract Hiring Settings").main_stock_warehouse
     for x in rows:
         r.append("items", {"item": x["item"], "description": x["description"], "delivered_qty": x["delivered_qty"],
@@ -80,6 +77,7 @@ def make_return(hire_order):
                            "normal_return_qty": x["balance_qty"], "uom": x["uom"]})
     r.insert()
     return r.name
+
 
 @frappe.whitelist()
 def make_direct_invoice(hire_return):
@@ -92,8 +90,11 @@ def make_direct_invoice(hire_return):
     settings = frappe.get_single("Contract Hiring Settings")
     si = frappe.new_doc("Sales Invoice")
     si.customer = hr.customer
-    si.company = frappe.db.get_value("Project", hr.project, "company") or settings.company or frappe.defaults.get_global_default("company")
+    si.company = frappe.db.get_value("Sales Order", hr.sales_order, "company") or settings.company or frappe.defaults.get_global_default("company")
     si.project = hr.project
+    si.hiring_invoice_type = "Direct Invoice"
+    si.hiring_sales_order = hr.sales_order
+    si.hire_return = hr.name
     for r in hr.items:
         rate = flt(frappe.db.get_value("Item", r.item, "standard_rate")) or flt(frappe.db.get_value("Item", r.item, "valuation_rate"))
         uom = r.uom or frappe.db.get_value("Item", r.item, "stock_uom")
@@ -114,11 +115,12 @@ def make_direct_invoice(hire_return):
     hr.db_set("direct_invoice", si.name)
     return si.name
 
+
 def create_return_stock_entry(doc):
     settings = frappe.get_single("Contract Hiring Settings")
     se = frappe.new_doc("Stock Entry")
     se.stock_entry_type = "Material Transfer"
-    se.company = frappe.db.get_value("Project", doc.project, "company") or frappe.defaults.get_global_default("company")
+    se.company = frappe.db.get_value("Sales Order", doc.sales_order, "company") or frappe.defaults.get_global_default("company")
     se.posting_date = doc.return_date
     for r in doc.items:
         uom = r.uom or frappe.db.get_value("Item", r.item, "stock_uom")
